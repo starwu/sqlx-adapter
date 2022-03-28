@@ -72,6 +72,10 @@ func TestAdapters(t *testing.T) {
 		if err != nil {
 			t.Fatalf("sqlx.Connect failed, err: %v", err)
 		}
+		// 这里忘记关闭连接了。
+		defer func(db *sqlx.DB) {
+			_ = db.Close()
+		}(db)
 
 		t.Log("---------- testTableName start")
 		testTableName(t, db)
